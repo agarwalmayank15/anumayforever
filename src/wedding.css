@@ -91,8 +91,11 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
    with animation classes that also use transform. */
 .section-tap-cue {
   position: absolute;
-  bottom: 22px; left: 0; right: 0;
-  display: flex; justify-content: center;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
   z-index: 20;
 }
 
@@ -452,7 +455,7 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
   padding: 0 12px; flex-shrink: 0;
 }
 .ring-instruction {
-  font-family: 'Bodony', serif; font-style: italic;
+  font-family: 'Bodony', serif;
   font-size: clamp(1.4rem, 4.8vw, 1.65rem); font-weight: 500;
   color: var(--h1); text-align: center; letter-spacing: 0.02em;
   transition: opacity 0.55s ease;
@@ -706,7 +709,7 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 }
 .end-inner {
   text-align: center;
-  padding: 12px 20px 108px;
+  padding: 8px 18px 124px;
   max-width: 440px;
   width: 100%;
   display: flex;
@@ -721,7 +724,7 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 
 .end-logo-wrap {
   width: min(420px, 92vw);
-  margin: 0 auto 12px;
+  margin: 0 auto 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -730,10 +733,10 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 }
 
 .end-logo-video {
-  width: min(320px, 86vw); 
-  max-height: 45dvh;         
+  width: min(290px, 78vw);
+  max-height: 32dvh;
   display: block;
-  margin-bottom: clamp(4px, 1.5dvh, 8px);
+  margin-bottom: 4px;
   flex-shrink: 0;
 
   -webkit-mask-image: radial-gradient(
@@ -757,8 +760,11 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 
 .end-names {
   font-family: 'Amazone', cursive;
-  font-size: clamp(3rem, 13vw, 5.2rem); color: var(--h1);
-  line-height: 1.1; margin-bottom: 30px; margin-top: -7px;
+  font-size: clamp(2.55rem, 11vw, 4.4rem);
+  color: var(--h1);
+  line-height: 1.02;
+  margin-top: 0px;
+  margin-bottom: 35px;
 }
 
 .end-name {
@@ -766,28 +772,47 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 }
 
 .end-amp {
-  font-family: 'Great Vibes', cursive; font-size: 0.75em; color: var(--deep-rose);
+  font-family: 'Amazone', cursive;
+  font-size: 0.52em;
+  color: var(--deep-rose);
+  line-height: 0.9;
 }
+
 .end-date {
-  font-family: 'Montserrat', sans-serif; font-weight: 500;
-  font-size: clamp(0.8rem, 3vw, 1.0rem); letter-spacing: 0.4em;
-  color: var(--deep-rose); text-transform: uppercase;
-  margin-bottom: clamp(14px, 3dvh, 18px);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: clamp(0.76rem, 2.7vw, 0.96rem);
+  letter-spacing: 0.34em;
+  color: var(--deep-rose);
+  text-transform: uppercase;
+  margin-bottom: 15px;
 }
+
 .end-divider {
-  font-size: 0.68rem; letter-spacing: 0.3em; color: var(--gold);
-  margin-bottom: clamp(14px, 3dvh, 16px); animation: twinkle 3s ease-in-out infinite;
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  color: var(--gold);
+  margin-bottom: 15px;
+  animation: twinkle 3s ease-in-out infinite;
 }
-/* Larger closing text */
+
 .end-line {
-  font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400;
-  font-size: clamp(1.4rem, 5.5vw, 2.1rem); color: var(--h1);
-  line-height: 1.55; margin-bottom: clamp(10px, 2dvh, 16px);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.15rem, 4.5vw, 1.7rem);
+  color: var(--h1);
+  line-height: 1.38;
+  margin-bottom: 15px;
 }
-/* Larger hashtag */
+
 .end-hashtag {
-  font-family: 'Montserrat', sans-serif; font-weight: 500;
-  font-size: clamp(0.82rem, 3vw, 1.05rem); color: var(--deep-rose); letter-spacing: 0.2em;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: clamp(0.74rem, 2.6vw, 0.95rem);
+  color: var(--deep-rose);
+  letter-spacing: 0.16em;
+  margin-bottom: 15px;
 }
 
 /* ═══ ANIMATIONS ═══ */
@@ -823,4 +848,65 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
   8%   { opacity: 0.65; }
   88%  { opacity: 0.45; }
   100% { transform: translateY(110vh) translateX(var(--drift, 40px)) rotate(calc(var(--rot, 1.5) * 360deg)) scale(1.1); opacity: 0; }
+}
+
+@media (max-height: 760px) {
+  .end-inner {
+    padding: 6px 16px 126px;
+  }
+
+  .end-logo-wrap {
+    margin-bottom: 4px;
+  }
+
+  .end-logo-video {
+    width: min(250px, 72vw);
+    max-height: 26dvh;
+    margin-bottom: 2px;
+  }
+
+  .end-names {
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+    margin-top: -12px;
+    margin-bottom: 12px;
+  }
+
+  .end-amp {
+    font-size: 0.48em;
+  }
+
+  .end-date {
+    font-size: 0.74rem;
+    letter-spacing: 0.28em;
+    margin-bottom: 8px;
+  }
+
+  .end-divider {
+    margin-bottom: 8px;
+  }
+
+  .end-line {
+    font-size: clamp(1.02rem, 4.1vw, 1.45rem);
+    line-height: 1.32;
+    margin-bottom: 8px;
+  }
+
+  .end-hashtag {
+    font-size: 0.72rem;
+    margin-bottom: 10px;
+  }
+
+  .end-section .section-tap-cue {
+    bottom: 10px;
+  }
+
+  .end-section .tap-cue {
+    gap: 6px;
+    padding: 4px 14px;
+  }
+
+  .end-section .tap-cue-text {
+    font-size: 0.64rem;
+    letter-spacing: 0.24em;
+  }
 }
