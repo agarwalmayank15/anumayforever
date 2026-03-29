@@ -734,9 +734,10 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 
 .end-logo-video {
   width: min(320px, 86vw); 
-  max-height: 45dvh;         
+  max-height: 40dvh;         
   display: block;
-  margin-bottom: 10px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   flex-shrink: 0;
 
   -webkit-mask-image: radial-gradient(
@@ -760,11 +761,11 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 
 .end-names {
   font-family: 'Amazone', cursive;
-  font-size: clamp(2.8rem, 12vw, 4.8rem);
+  font-size: clamp(2.5rem, 10vw, 4rem);
   color: var(--h1);
   line-height: 1.02;
   margin-top: 0px;
-  margin-bottom: 35px;
+  margin-bottom: 25px;
 }
 
 .end-name {
