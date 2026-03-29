@@ -14,7 +14,7 @@ const C = {
   aboutLine1:
     "From one unexpected moment to a lifetime of choosing each other.",
   aboutLine2: "Now, with full hearts, we're getting ready for our forever.",
-  anticipation: "The countdown to our forever begins here…",
+  anticipation: "The countdown begins here…",
   ringInstruction: "Drag the ring to her finger 💍",
   ringSuccess: "And that was the easiest yes. 💍",
   endLine: "We can't wait to celebrate with you.",
@@ -27,7 +27,7 @@ const C = {
   2 = about us
   3 = ring game
   4 = save the date
-  5 = event calendar
+  5 = event calendar (currently disabled / commented out)
   6 = end slate (logo video here)
 */
 
@@ -131,6 +131,8 @@ export default function SaveTheDate() {
 
   /* Ring game */
   const RING_HALF = 26;
+  const SNAP_RADIUS = 10;
+  const SNAP_OFFSET = { x: -2, y: 1 };
   const gameRef = useRef<HTMLDivElement>(null);
   const ringElemRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
@@ -391,9 +393,10 @@ export default function SaveTheDate() {
       Math.hypot(
         x + RING_HALF - snapCenter.current.x,
         y + RING_HALF - snapCenter.current.y,
-      ) < 10
-    )
+      ) <= SNAP_RADIUS
+    ) {
       doSnap();
+    }
   };
   const onGamePointerUp = () => {
     dragging.current = false;
@@ -403,11 +406,12 @@ export default function SaveTheDate() {
     if (ringSnapped) return;
     dragging.current = false;
     if (navigator.vibrate) navigator.vibrate([80, 40, 80]);
-    const sx = snapCenter.current.x - RING_HALF;
-    const sy = snapCenter.current.y - RING_HALF;
+    const sx = snapCenter.current.x - RING_HALF + SNAP_OFFSET.x;
+    const sy = snapCenter.current.y - RING_HALF + SNAP_OFFSET.y;
+    ringCurrentPos.current = { x: sx, y: sy };
     if (ringElemRef.current) {
       ringElemRef.current.style.transition =
-        "left 0.28s cubic-bezier(0.34,1.56,0.64,1), top 0.28s cubic-bezier(0.34,1.56,0.64,1)";
+        "left 0.22s cubic-bezier(0.34,1.56,0.64,1), top 0.22s cubic-bezier(0.34,1.56,0.64,1)";
       ringElemRef.current.style.left = sx + "px";
       ringElemRef.current.style.top = sy + "px";
     }
@@ -622,8 +626,18 @@ export default function SaveTheDate() {
             )}
           </div>
 
-          {/* Tap to continue appears after success – user controls transition */}
-          {showSuccess && (
+          {/* Bottom cue area: skip before success, tap-to-continue after success */}
+          {!showSuccess ? (
+            <div className="section-tap-cue fade-in">
+              <button
+                className="ring-skip-btn"
+                onClick={() => setSection(4)}
+                type="button"
+              >
+                Skip - I am in a hurry
+              </button>
+            </div>
+          ) : (
             <div className="section-tap-cue fade-in">
               <TapCue onClick={() => setSection(4)} />
             </div>
@@ -635,7 +649,7 @@ export default function SaveTheDate() {
       {section === 4 && (
         <div
           className="section savedate-section"
-          onClick={() => setSection(5)}
+          onClick={() => setSection(6)}
           style={{ cursor: "pointer" }}
         >
           <div className="savedate-inner fade-in-up">
@@ -676,12 +690,13 @@ export default function SaveTheDate() {
             </div>
           </div>
           <div className="section-tap-cue">
-            <TapCue label="View Events" />
+            <TapCue label="Final Note" />
           </div>
         </div>
       )}
 
-      {/* ════ S5 – EVENTS ════ */}
+      {/*
+      {/ * ════ S5 – EVENTS ════ * /}
       {section === 5 && (
         <div
           className="section events-section"
@@ -736,7 +751,7 @@ export default function SaveTheDate() {
             </div>
           </div>
 
-          {/* Centered at bottom – no transform conflict */}
+          {/ * Centered at bottom – no transform conflict * /}
           <div
             className="section-tap-cue"
             onClick={(e) => {
@@ -755,6 +770,8 @@ export default function SaveTheDate() {
           )}
         </div>
       )}
+
+      */}
 
       {/* ════ S6 – END SLATE ════ */}
       {section === 6 && (
@@ -776,7 +793,8 @@ export default function SaveTheDate() {
               <span className="end-amp">&</span>
               <span className="end-name">{C.groom}</span>
             </h1>
-            <p className="end-date">6th July 2026</p>
+            <p className="end-date">5th - 6th July 2026</p>
+            <span className="end-date">Hyderabad</span>
             <div className="end-divider">✦ &nbsp; ✦ &nbsp; ✦</div>
             <p className="end-line">{C.endLine}</p>
             <p className="end-hashtag">{C.hashtag}</p>
