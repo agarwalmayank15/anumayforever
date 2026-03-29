@@ -498,7 +498,7 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 }
 .proposal-video-card {
   width: 100%;
-  height: clamp(250px, 50dvh, 400px);
+  height: clamp(250px, 50dvh, 500px);
   border-radius: 18px;
   overflow: hidden;
   box-shadow:
@@ -709,7 +709,7 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 }
 .end-inner {
   text-align: center;
-  padding: 8px 18px 124px;
+  padding: 24px 20px 120px;
   max-width: 440px;
   width: 100%;
   display: flex;
@@ -724,7 +724,7 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 
 .end-logo-wrap {
   width: min(420px, 92vw);
-  margin: 0 auto 8px;
+  margin: 0 auto 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -733,10 +733,10 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 }
 
 .end-logo-video {
-  width: min(290px, 78vw);
-  max-height: 32dvh;
+  width: min(320px, 86vw); 
+  max-height: 45dvh;         
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
   flex-shrink: 0;
 
   -webkit-mask-image: radial-gradient(
@@ -760,7 +760,7 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 
 .end-names {
   font-family: 'Amazone', cursive;
-  font-size: clamp(2.55rem, 11vw, 4.4rem);
+  font-size: clamp(2.8rem, 12vw, 4.8rem);
   color: var(--h1);
   line-height: 1.02;
   margin-top: 0px;
@@ -773,7 +773,7 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
 
 .end-amp {
   font-family: 'Amazone', cursive;
-  font-size: 0.52em;
+  font-size: 0.6em;
   color: var(--deep-rose);
   line-height: 0.9;
 }
