@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState, useCallback } from "react";
 
 const EnvelopeImg = "/Envelope.jpg";
@@ -131,8 +132,8 @@ export default function SaveTheDate() {
 
   /* Ring game */
   const RING_HALF = 26;
-  const SNAP_RADIUS = 10;
-  const SNAP_OFFSET = { x: -2, y: 1 };
+  const SNAP_RADIUS = 15;
+  const SNAP_OFFSET = { x: 3, y: 1 };
   const gameRef = useRef<HTMLDivElement>(null);
   const ringElemRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
@@ -282,7 +283,7 @@ export default function SaveTheDate() {
           x: r.width * 0.5 - RING_HALF,
           y: r.height * 0.9 - RING_HALF,
         };
-        snapCenter.current = { x: r.width * 0.67, y: r.height * 0.6 };
+        snapCenter.current = { x: r.width * 0.68, y: r.height * 0.62 };
         setRingInitialized(true);
       }, 100);
       return () => clearTimeout(t);
