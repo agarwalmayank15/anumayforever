@@ -133,7 +133,10 @@ export default function SaveTheDate() {
   /* Ring game */
   const RING_HALF = 26;
   const SNAP_RADIUS = 15;
-  const SNAP_OFFSET = { x: 3, y: 1 };
+  const getSnapOffset = () => {
+  const isSmallPhone = window.innerHeight <= 740;
+  return isSmallPhone ? { x: 3, y: 4 } : { x: 3, y: 1 };
+  };
   const gameRef = useRef<HTMLDivElement>(null);
   const ringElemRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
@@ -278,12 +281,19 @@ export default function SaveTheDate() {
       setShowSuccess(false);
       const t = setTimeout(() => {
         if (!gameRef.current) return;
+
         const r = gameRef.current.getBoundingClientRect();
+        const isSmallPhone = window.innerHeight <= 740 || r.width <= 320;
+
         ringCurrentPos.current = {
           x: r.width * 0.5 - RING_HALF,
           y: r.height * 0.9 - RING_HALF,
         };
-        snapCenter.current = { x: r.width * 0.68, y: r.height * 0.62 };
+
+        snapCenter.current = isSmallPhone
+          ? { x: r.width * 0.68, y: r.height * 0.67 }
+          : { x: r.width * 0.68, y: r.height * 0.62 };
+
         setRingInitialized(true);
       }, 100);
       return () => clearTimeout(t);
@@ -407,8 +417,9 @@ export default function SaveTheDate() {
     if (ringSnapped) return;
     dragging.current = false;
     if (navigator.vibrate) navigator.vibrate([80, 40, 80]);
-    const sx = snapCenter.current.x - RING_HALF + SNAP_OFFSET.x;
-    const sy = snapCenter.current.y - RING_HALF + SNAP_OFFSET.y;
+    const snapOffset = getSnapOffset();
+    const sx = snapCenter.current.x - RING_HALF + snapOffset.x;
+    const sy = snapCenter.current.y - RING_HALF + snapOffset.y;
     ringCurrentPos.current = { x: sx, y: sy };
     if (ringElemRef.current) {
       ringElemRef.current.style.transition =
@@ -559,14 +570,19 @@ export default function SaveTheDate() {
 
       {/* ════ S3 – RING GAME ════ */}
       {section === 3 && (
-        <div className="section ring-section">
-          <h2
-            className={`ring-heading fade-in-up ${ringSnapped ? "elem-faded" : ""}`}
-          >
+        <div
+          className="section ring-section"
+          onClick={showSuccess ? () => setSection(4) : undefined}
+          style={{ cursor: showSuccess ? "pointer" : "default" }}
+        >
+
+        <div className={`ring-heading-wrap ${showSuccess ? "ring-heading-wrap-hidden" : ""}`}>
+          <h2 className="ring-heading fade-in-up">
             But First, Help Mayank
             <br />
             Complete the Proposal
           </h2>
+        </div>
 
           <div
             ref={gameRef}
@@ -632,7 +648,10 @@ export default function SaveTheDate() {
             <div className="section-tap-cue fade-in">
               <button
                 className="ring-skip-btn"
-                onClick={() => setSection(4)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSection(4);
+                }}
                 type="button"
               >
                 Skip - I am in a hurry
@@ -640,7 +659,7 @@ export default function SaveTheDate() {
             </div>
           ) : (
             <div className="section-tap-cue fade-in">
-              <TapCue onClick={() => setSection(4)} />
+              <TapCue label="Tap to continue" />
             </div>
           )}
         </div>
@@ -776,7 +795,11 @@ export default function SaveTheDate() {
 
       {/* ════ S6 – END SLATE ════ */}
       {section === 6 && (
-        <div className="section end-section">
+        <div
+          className="section end-section"
+          onClick={goHome}
+          style={{ cursor: "pointer" }}
+        >
           <div className="end-inner fade-in-up">
             {/* Logo video – no box, borderless, large */}
             <div className="end-logo-wrap">
@@ -803,7 +826,7 @@ export default function SaveTheDate() {
 
           {/* Home cue pinned at bottom */}
           <div className="section-tap-cue">
-            <TapCue onClick={goHome} label="Back to Home" />
+            <TapCue label="Back to Home" />
           </div>
         </div>
       )}
